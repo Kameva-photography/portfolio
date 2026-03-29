@@ -93,6 +93,9 @@ h6 {
   color: var(--heading-color);
   font-family: var(--heading-font);
 }
+  ul{
+      list-style: none;
+  }
 
 /* PHP Email Form Messages
 ------------------------------*/
