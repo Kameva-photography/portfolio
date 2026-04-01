@@ -430,7 +430,7 @@
   </div>
 </section>
 
-      <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
+      <form id="contact-form" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="300">
         <span class="form-section-label">Send a Message</span>
         <h2 class="form-heading">Tell me about your shoot</h2>
 
@@ -453,9 +453,12 @@
           </div>
           <div class="col-md-12">
             <div class="form-actions">
-              <button type="submit">Send Message →</button>
+              <button type="submit" id="submit-btn" >Send Message →</button>
               <span class="form-note">I typically respond within 24 hours.</span>
             </div>
+
+             <p id="form-status" style="text-align:center; font-size:14px;"></p>
+
             <div class="loading" style="display:none; font-size:0.78rem; color:#888; margin-top:0.5rem;">Sending…</div>
             <div class="error-message" style="font-size:0.78rem; color:#c0392b; margin-top:0.5rem;"></div>
             <div class="sent-message" style="display:none; margin-top:0.5rem;">Your message has been sent — I'll be in touch soon!</div>
@@ -623,6 +626,44 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+
+  <!-- EMAILJS SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+(function(){
+  emailjs.init("27Vuc1iqZ_itI7dn1"); // 🔑 Replace this
+})();
+
+document.getElementById("contact-form")
+.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const btn = document.getElementById("submit-btn");
+  const status = document.getElementById("form-status");
+
+  btn.innerText = "Sending...";
+  btn.disabled = true;
+
+  emailjs.sendForm("service_749pp9b", "template_r1bfzaa", this)
+    .then(function() {
+      status.style.color = "green";
+      status.innerText = "Message sent successfully ✅";
+      btn.innerText = "Send Message";
+      btn.disabled = false;
+      document.getElementById("contact-form").reset();
+    }, function(error) {
+      status.style.color = "red";
+      status.innerText = "Failed to send ❌";
+      btn.innerText = "Send Message";
+      btn.disabled = false;
+      console.log(error);
+    });
+});
+</script>
+
+
 
 </body>
 
